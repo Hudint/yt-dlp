@@ -642,6 +642,12 @@ class YoutubeDL:
         self.cache = Cache(self)
         self.__header_cookies = []
 
+        if os.environ.get('YTDLP_COOKIEFILE') is not None:
+            self.params.update({"cookiefile": os.environ.get('YTDLP_COOKIEFILE')})
+            write_string(f"{os.environ.get('YTDLP_COOKIEFILE')} is used for cookies!\n")
+
+        write_string(f"Cookies: {self.params.get('cookiefile')}\n")
+
         stdout = sys.stderr if self.params.get('logtostderr') else sys.stdout
         self._out_files = Namespace(
             out=stdout,
